@@ -37,7 +37,10 @@ class OssClient {
   async hasImage(fileName) {
     try {
       await this.imageBedInstance.head(`${this.config.prefixKey}/${fileName}`);
-      return `https://${this.config.bucket}.${this.config.region}.aliyuncs.com/${this.config.prefixKey}/${fileName}`;
+      if (this.config.host === '') {
+        return `https://${this.config.bucket}.${this.config.region}.aliyuncs.com/${this.config.prefixKey}/${fileName}`;
+      }
+      return `https://${this.config.host}/${this.config.prefixKey}/${fileName}`;
     } catch (e) {
       return '';
     }
